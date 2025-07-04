@@ -1,6 +1,7 @@
 #include "game_defines.h"
 #include "include/raylib.h"
 #include "texture_packer_utils.h"
+#include "mem_arena.h"
 
 int main(void) {
   const int screenWidth = 800;
@@ -11,9 +12,11 @@ int main(void) {
   bool exitWindowRequested = false;
   bool exitWindow = false;
 
+  MemoryArena* arenaMain = CreateMemoryArena(1024 * 1024);
+
   LoadAllTexturesAndSprites();
 
-  world = calloc(1, sizeof(World));
+  world = PushType(arenaMain, World);
 
   world->camera = (Camera2D){0};
   world->camera.target = (Vector2){0, 0};
@@ -114,6 +117,7 @@ int main(void) {
   }
 
   UnloadAllTextures();
+  DestroyMemoryArena(arenaMain);
   CloseWindow();
   return 0;
 }
