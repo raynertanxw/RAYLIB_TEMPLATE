@@ -1,3 +1,10 @@
 {
-    "outputNameNoExtension": "my-raylib-game",
+  "outputNameNoExtension": "my-raylib-game", // TEMPLATE: Rename to project name
+  "files.associations": {
+    "debugutils.h": "c",
+    "utils.h": "c",
+    "windows.h": "c",
+    "texture_packer_utils.h": "c"
+  }
 }
+

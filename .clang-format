@@ -37,3 +37,4 @@ BinPackParameters: false
 InsertNewlineAtEOF: true
 IndentCaseLabels: true
 PointerAlignment: Left
+SortIncludes: false

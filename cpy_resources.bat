@@ -1,9 +1,0 @@
-@echo off
-echo Creating bin directory...
-if not exist "%~dp0bin" mkdir "%~dp0bin"
-
-echo Removing old resources...
-if exist "%~dp0bin\resources" rmdir /S /Q "%~dp0bin\resources"
-
-echo Copying resources...
-xcopy /E /I /Y "%~dp0resources" "%~dp0bin\resources"
