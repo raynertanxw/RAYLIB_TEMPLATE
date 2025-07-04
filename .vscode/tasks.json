@@ -1,0 +1,160 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "build debug osx",
+            "command": "clang",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "-DDEBUG=1", // Define the DEBUG macro for debug build
+                "${workspaceFolder}/src/main.c",
+                "-o",
+                "${workspaceFolder}/bin/${config:outputNameNoExtension}",
+                "-L", "${workspaceFolder}/lib_mac/", "-lraylib",
+                "-framework", "CoreVideo",
+                "-framework", "IOKit",
+                "-framework", "Cocoa",
+                "-framework", "GLUT",
+                "-framework", "OpenGL"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "Copy Resources To Bin - osx",
+            "detail": "Build and debug osx"
+        },
+        {
+            "type": "cppbuild",
+            "label": "build debug windows",
+            "command": "gcc",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-DDEBUG=1", // Define the DEBUG macro for debug build
+                "${workspaceFolder}/src/main.c",
+                "-o",
+                "${workspaceFolder}/bin/${config:outputNameNoExtension}.exe",
+                "-L", "${workspaceFolder}/lib_win/", "-lraylib",
+                "-lgdi32",
+                "-lwinmm",
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "Copy Resources To Bin - windows",
+            "detail": "Build and debug windows"
+        },
+
+        {
+            "type": "cppbuild",
+            "label": "build release osx with -g",
+            "command": "clang",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "-DDEBUG=0", // Remove the DEBUG macro for release build
+                "${workspaceFolder}/src/main.c",
+                "-o",
+                "${workspaceFolder}/bin/${config:outputNameNoExtension}",
+                "-L", "${workspaceFolder}/lib_mac/", "-lraylib",
+                "-framework", "CoreVideo",
+                "-framework", "IOKit",
+                "-framework", "Cocoa",
+                "-framework", "GLUT",
+                "-framework", "OpenGL"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "Copy Resources To Bin - osx",
+            "detail": "Build osx release"
+        },
+        {
+            "type": "cppbuild",
+            "label": "build release windows with -g",
+            "command": "gcc",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-DDEBUG=0", // Remove the DEBUG macro for release build
+                "${workspaceFolder}/src/main.c",
+                "-o",
+                "${workspaceFolder}/bin/${config:outputNameNoExtension}.exe",
+                "-L", "${workspaceFolder}/lib_win/", "-lraylib",
+                "-lgdi32",
+                "-lwinmm",
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "Copy Resources To Bin - windows",
+            "detail": "Build windows release"
+        },
+
+
+        {
+            "label": "Copy Resources To Bin - osx",
+            "type": "shell",
+            "command": "mkdir -p \"${workspaceFolder}/bin\" && rm -rf \"${workspaceFolder}/bin/resources\" && cp -r \"${workspaceFolder}/resources\" \"${workspaceFolder}/bin/\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "none",
+                "isDefault": false
+            },
+            "detail": "Copies resources folder to bin directory on osx."
+        },
+        {
+            "label": "Copy Resources To Bin - windows",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                ".\\cpy_resources.bat"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "none",
+                "isDefault": false
+            },
+            "detail": "Copies resources folder to bin directory on windows."
+        },
+    ]
+}

@@ -1,0 +1,60 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "program" : "",
+            "request": "launch",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "environment": [
+                {
+                    "name": "PWD",
+                    "value": "${workspaceFolder}/bin"
+                }
+            ],
+            "externalConsole": false,
+
+            "osx": {
+                "program": "${workspaceFolder}/bin/${config:outputNameNoExtension}",
+                "MIMode": "lldb",
+                "preLaunchTask": "build debug osx",
+            },
+            "windows": {
+                "program": "${workspaceFolder}/bin/${config:outputNameNoExtension}.exe",
+                "MIMode": "gdb",
+                "preLaunchTask": "build debug windows"
+            },
+        },
+        {
+            "name": "Release",
+            "type": "cppdbg",
+            "program" : "",
+            "request": "launch",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "environment": [
+                {
+                    "name": "PWD",
+                    "value": "${workspaceFolder}/bin"
+                }
+            ],
+            "externalConsole": false,
+
+            "osx": {
+                "program": "${workspaceFolder}/bin/${config:outputNameNoExtension}",
+                "MIMode": "lldb",
+                "preLaunchTask": "build release osx with -g",
+            },
+            "windows": {
+                "program": "${workspaceFolder}/bin/${config:outputNameNoExtension}.exe",
+                "MIMode": "gdb",
+                "preLaunchTask": "build release windows with -g"
+            },
+        },
+
+    ]
+}
