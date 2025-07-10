@@ -1,5 +1,6 @@
 #include "game_defines.h"
 #include "include/raylib.h"
+#include "input_utils.h"
 #include "texture_packer_utils.h"
 #include "mem_arena.h"
 
@@ -16,7 +17,9 @@ int main(void) {
 
   LoadAllTexturesAndSprites();
 
+  // ::INIT
   world = PushType(arenaMain, World);
+  consumableInputs = PushType(arenaMain, ConsumableInputFrame);
 
   world->camera = (Camera2D){0};
   world->camera.target = (Vector2){0, 0};
@@ -33,24 +36,26 @@ int main(void) {
     float deltaTime = GetFrameTime();
 
     { // ::INPUT
+      pollInputs();
+
       if (exitWindowRequested) {
-        if (IsKeyPressed(KEY_Y) || IsKeyPressed(KEY_ENTER))
+        if (tryConsumeInput(INPUT_Y_PRESSED) || tryConsumeInput(INPUT_ENTER_PRESSED))
           exitWindow = true;
-        else if (IsKeyPressed(KEY_N) || IsKeyPressed(KEY_ESCAPE))
+        else if (tryConsumeInput(INPUT_N_PRESSED) || tryConsumeInput(INPUT_ESC_PRESSED))
           exitWindowRequested = false;
-      } else if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE))
+      } else if (WindowShouldClose() || tryConsumeInput(INPUT_ESC_PRESSED))
         exitWindowRequested = true;
 
       const float MOVEMENT_SPEED = 50.0f;
-      if (IsKeyDown(KEY_A)) world->player1Pos.x -= MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_D)) world->player1Pos.x += MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_W)) world->player1Pos.y -= MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_S)) world->player1Pos.y += MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_A_DOWN)) world->player1Pos.x -= MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_D_DOWN)) world->player1Pos.x += MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_W_DOWN)) world->player1Pos.y -= MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_S_DOWN)) world->player1Pos.y += MOVEMENT_SPEED * deltaTime;
 
-      if (IsKeyDown(KEY_LEFT)) world->player2Pos.x -= MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_RIGHT)) world->player2Pos.x += MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_UP)) world->player2Pos.y -= MOVEMENT_SPEED * deltaTime;
-      if (IsKeyDown(KEY_DOWN)) world->player2Pos.y += MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_LEFT_DOWN)) world->player2Pos.x -= MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_RIGHT_DOWN)) world->player2Pos.x += MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_UP_DOWN)) world->player2Pos.y -= MOVEMENT_SPEED * deltaTime;
+      if (tryConsumeInput(INPUT_DOWN_DOWN)) world->player2Pos.y += MOVEMENT_SPEED * deltaTime;
     }
 
     { // ::RENDER
