@@ -39,11 +39,11 @@ int main(void) {
       pollInputs();
 
       if (exitWindowRequested) {
-        if (tryConsumeInput(INPUT_Y_PRESSED) || tryConsumeInput(INPUT_ENTER_PRESSED))
+        if (tryConsumeInput(INPUT_Y_PRESSED) || tryConsumeInput(INPUT_ENTER_PRESSED) || tryConsumeInput(INPUT_GPAD_FACE_A_PRESSED))
           exitWindow = true;
-        else if (tryConsumeInput(INPUT_N_PRESSED) || tryConsumeInput(INPUT_ESC_PRESSED))
+        else if (tryConsumeInput(INPUT_N_PRESSED) || tryConsumeInput(INPUT_ESC_PRESSED) || tryConsumeInput(INPUT_GPAD_FACE_B_PRESSED))
           exitWindowRequested = false;
-      } else if (WindowShouldClose() || tryConsumeInput(INPUT_ESC_PRESSED))
+      } else if (WindowShouldClose() || tryConsumeInput(INPUT_ESC_PRESSED) || tryConsumeInput(INPUT_GPAD_START_PRESSED))
         exitWindowRequested = true;
 
       const float MOVEMENT_SPEED = 50.0f;
@@ -56,6 +56,11 @@ int main(void) {
       if (tryConsumeInput(INPUT_RIGHT_DOWN)) world->player2Pos.x += MOVEMENT_SPEED * deltaTime;
       if (tryConsumeInput(INPUT_UP_DOWN)) world->player2Pos.y -= MOVEMENT_SPEED * deltaTime;
       if (tryConsumeInput(INPUT_DOWN_DOWN)) world->player2Pos.y += MOVEMENT_SPEED * deltaTime;
+
+      world->player1Pos.x += consumableInputs->gamepadLeftX * MOVEMENT_SPEED * deltaTime;
+      world->player1Pos.y += consumableInputs->gamepadLeftY * MOVEMENT_SPEED * deltaTime;
+      world->player2Pos.x += consumableInputs->gamepadRightX * MOVEMENT_SPEED * deltaTime;
+      world->player2Pos.y += consumableInputs->gamepadRightY * MOVEMENT_SPEED * deltaTime;
     }
 
     { // ::RENDER
@@ -118,6 +123,7 @@ int main(void) {
       DrawRectangle(0, 100, screenWidth, 200, RAYWHITE);
       DrawText("Are you sure you want to exit program? [Y/N]", 40, 180, 30, BLACK);
     }
+
     EndDrawing();
   }
 

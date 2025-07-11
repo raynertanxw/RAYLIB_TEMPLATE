@@ -9,4 +9,7 @@
 #define MARK_IGNORE_UNUSED_FUNC
 #endif
 
+static int MARK_IGNORE_UNUSED_FUNC   absI(int i) { return i < 0 ? -i : i; }
+static float MARK_IGNORE_UNUSED_FUNC absF(float i) { return i < 0.0f ? -i : i; }
+
 #endif // !UTILS_H
