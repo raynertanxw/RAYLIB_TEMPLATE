@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <util.h>
 
 typedef struct MemoryArena {
   size_t              size;

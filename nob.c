@@ -369,7 +369,9 @@ void execute_cmd_sprite_packer() {
 
 void execute_cmd_clean() {
   Nob_File_Paths filenames = {0};
-  if (!nob_read_entire_dir(BUILD_FOLDER, &filenames)) exit(1);
+  if (!nob_read_entire_dir(BUILD_FOLDER, &filenames)) {
+    nob_log(NOB_INFO, "Build Folder %s not found. Ignore this if you are running nob for first time on new machine, other commands will create the build folder.\n", BUILD_FOLDER);
+  }
 
   for (size_t i = 0; i < filenames.count; i++) {
     const char* filename = filenames.items[i];
