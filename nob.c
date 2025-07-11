@@ -358,8 +358,8 @@ void execute_cmd_sprite_packer() {
       MAIN_ATLAS_IMAGE_FILE,
       MAIN_ATLAS_META_FILE,
       "mainAtlas",
-      2048,
-      2048,
+      MAIN_ATLAS_SIZE,
+      MAIN_ATLAS_SIZE,
       MAIN_ATLAS_MAX_SPRITES);
 
   // TEMPLATE: Build additional sprite atlas as defined in src/build_defines
