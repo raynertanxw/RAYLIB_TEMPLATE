@@ -8,6 +8,14 @@ int main(void) {
   const int screenWidth = 800;
   const int screenHeight = 450;
   InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+  // NOTE: We need to override the gamepad bindings, else mac won't work.
+  // Source: https://github.com/mdqinc/SDL_GameControllerDB/blob/master/gamecontrollerdb.txt
+  // Some controllers still don't work, so you got to get the bindings yourself.
+  // You can try getting your controller's bindings via this: https://github.com/libsdl-org/SDL/blob/main/test/testcontroller.c
+  char* mappings = LoadFileText("resources/gamecontrollerdb.txt");
+  SetGamepadMappings(mappings);
+
   SetTargetFPS(60);
   SetExitKey(KEY_NULL);
   bool exitWindowRequested = false;
@@ -129,6 +137,7 @@ int main(void) {
 
   UnloadAllTextures();
   DestroyMemoryArena(arenaMain);
+  UnloadFileText(mappings);
   CloseWindow();
   return 0;
 }
